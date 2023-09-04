@@ -8,7 +8,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=120)
     ingredients = models.CharField(max_length=512)
     cooking_time = models.IntegerField()
-    difficulty = models.CharField(max_length=20)
+    difficulty = models.CharField(max_length=20, null=True)
     description = models.TextField()
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
