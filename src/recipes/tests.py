@@ -28,17 +28,11 @@ class RecipeModelTest(TestCase):
         max_length = recipe._meta.get_field('ingredients').max_length
         self.assertEqual(max_length, 512)
 
-    def test_difficulty_max_length(self):
-        recipe = Recipe.objects.get(name="Test Recipe")
-        max_length = recipe._meta.get_field('difficulty').max_length
-        self.assertEqual(max_length, 20)
-
-    def test_difficulty_null_true(self):
-        recipe = Recipe.objects.get(name="Test Recipe")
-        allow_null = recipe._meta.get_field("difficulty").null
-        self.assertTrue(allow_null)
-
     def test_creator_null_true(self):
         recipe = Recipe.objects.get(name="Test Recipe")
         allow_null = recipe._meta.get_field("creator").null
         self.assertTrue(allow_null)
+
+    def test_get_absolute_url(self):
+        recipe = Recipe.objects.get(id=1)
+        self.assertEqual(recipe.get_absolute_url(), "/recipes/list/1")

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -25,7 +23,7 @@
             align-items: center;
         }
 
-        .title {
+        .recipe-wrapper {
             max-width: 800px;
             display: flex;
             flex-direction: column;
@@ -39,21 +37,44 @@
         }
 
         h1 {
-            margin: 20px;
-            font-size: 36px;
+            margin: 10px 20px;
+            font-size: 30px;
             text-align: center;
         }
 
         h2 {
-            margin: 20px;
+            margin: 10px 20px;
+            font-size: 18px;
             text-align: center;
-            font-size: 24px;
+            font-weight: 400;
+        }
+
+        h3 {
+            margin: 10px 20px;
+            text-align: left;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        p {
+            margin: 0 10px 20px;
+            text-align: left;
+            font-size: 16px;
+            width: 100%;
+            padding: 0 20px;
         }
 
         img {
             width: 100%;
             object-fit: contain;
             margin-bottom: 20px;
+        }
+
+        ul {
+            text-align: left;
+            width: 100%;
+            padding: 0 20px;
+            list-style-position: inside;
         }
 
         a {
@@ -72,15 +93,25 @@
             opacity: 0.8;
         }
     </style>
-    <title>Recipes App</title>
+    <title>{{object.name}}</title>
 </head>
 
 <body>
-    <div class="title">
-        <img src="{% static 'recipes/images/website-header.jpg' %}" />
-        <h1>Recipes App</h1>
-        <h2>Welcome to the delicious Recipe App where you can find and manage fantastic recipes!</h2>
-        <a href="/recipes/list">Browse Recipes</a>
+    <div class="recipe-wrapper">
+        <img src="{{object.pic.url}}" />
+        <h1>{{object.name}}</h1>
+        <h2>Cooking Time: {{object.cooking_time}} minutes &bull; Difficulty: {{object.calculate_difficulty}} &bull;
+            Author: {{object.creator.name}}
+        </h2>
+        <h3>Ingredients:</h3>
+        <ul>
+            {% for ingredient in object.return_ingredients_as_list %}
+            <li>{{ingredient}}</li>
+            {% endfor %}
+        </ul>
+        <h3>Description:</h3>
+        <p>{{object.description}}</p>
+        <a href="/list">Back</a>
     </div>
 </body>
 
