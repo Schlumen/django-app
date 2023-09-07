@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -23,7 +25,7 @@
             align-items: center;
         }
 
-        .recipe-wrapper {
+        .title {
             max-width: 800px;
             display: flex;
             flex-direction: column;
@@ -37,31 +39,15 @@
         }
 
         h1 {
-            margin: 10px 20px;
-            font-size: 30px;
+            margin: 20px;
+            font-size: 36px;
             text-align: center;
         }
 
         h2 {
-            margin: 10px 20px;
-            font-size: 18px;
+            margin: 20px;
             text-align: center;
-            font-weight: 400;
-        }
-
-        h3 {
-            margin: 10px 20px;
-            text-align: left;
-            width: 100%;
-            padding: 0 20px;
-        }
-
-        p {
-            margin: 0 10px 20px;
-            text-align: left;
-            font-size: 16px;
-            width: 100%;
-            padding: 0 20px;
+            font-size: 24px;
         }
 
         img {
@@ -70,18 +56,11 @@
             margin-bottom: 20px;
         }
 
-        ul {
-            text-align: left;
-            width: 100%;
-            padding: 0 20px;
-            list-style-position: inside;
-        }
-
-        a {
+        button {
             text-decoration: none;
             font-size: 20px;
             padding: 10px 20px;
-            margin: 0px 20px 20px;
+            margin: 20px 20px 40px;
             background-color: rgb(0, 185, 0);
             border-radius: 10px;
             border: solid black 1px;
@@ -89,30 +68,54 @@
             color: black;
         }
 
-        a:hover {
+        button:hover {
             opacity: 0.8;
+            cursor: pointer;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input {
+            margin: 5px;
+            padding: 5px;
+
+        }
+
+        label {
+            margin: 5px;
+        }
+
+        ul {
+            list-style: none;
         }
     </style>
-    <title>{{object.name}}</title>
+    <title>Login</title>
 </head>
 
 <body>
-    <div class="recipe-wrapper">
-        <img src="{{object.pic.url}}" />
-        <h1>{{object.name}}</h1>
-        <h2>Cooking Time: {{object.cooking_time}} minutes &bull; Difficulty: {{object.calculate_difficulty}} &bull;
-            Author: {{object.creator.name}}
+    <div class="title">
+        <img src="{% static 'recipes/images/website-header.jpg' %}" />
+        <h1>Login</h1>
+        <h2>
+            {% if error_message %}
+            {{error_message}}
+            {% endif %}
         </h2>
-        <h3>Ingredients:</h3>
-        <ul>
-            {% for ingredient in object.return_ingredients_as_list %}
-            <li>{{ingredient}}</li>
-            {% endfor %}
-        </ul>
-        <h3>Description:</h3>
-        <p>{{object.description}}</p>
-        <a href="{% url 'recipes:list' %}">Back</a>
-        <a href="{% url 'logout' %}"> Logout </a>
+        <form action="" method="POST">
+            {% comment %} add Django security token {% endcomment %}
+            {% csrf_token %}
+
+            {% comment %} print form received from view {% endcomment %}
+            {{form}}
+
+            {% comment %} add button {% endcomment %}
+            <button type="submit">Login</button>
+        </form>
     </div>
 </body>
 
