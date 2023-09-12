@@ -18,7 +18,7 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse("recipes:detail", kwargs={"pk": self.pk})
-    
+
     def calculate_difficulty(self):
         num_of_ingredients = len(self.return_ingredients_as_list())
 
@@ -32,5 +32,9 @@ class Recipe(models.Model):
             return "Hard"
 
     def return_ingredients_as_list(self):
-        if self.ingredients == "": return []
+        if self.ingredients == "":
+            return []
         return self.ingredients.split(", ")
+
+    def return_number_of_ingredients(self):
+        return len(self.return_ingredients_as_list())

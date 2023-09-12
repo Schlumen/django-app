@@ -77,6 +77,10 @@
             font-weight: bold;
         }
 
+        img {
+            margin: 0 20px;
+        }
+
         button,
         #back {
             text-decoration: none;
@@ -108,22 +112,35 @@
             <button type="submit">Search</button>
         </form>
         {% if recipes %}
+        <h2>Search Results:</h2>
         <table>
             <thead>
                 <tr>
                     <th>Recipe Name</th>
-                    <th>Link to Recipe Details</th>
+                    <th>Cooking Time (minutes)</th>
+                    <th>Nr. of Ingredients</th>
+                    <th>Difficulty</th>
+                    <th>Author</th>
                 </tr>
             </thead>
             <tbody>
                 {% for recipe in recipes %}
                 <tr>
-                    <td>{{ recipe.name }}</td>
-                    <td><a href="{% url 'recipes:detail' pk=recipe.id %}">View Details</a></td>
+                    <td><a href="{% url 'recipes:detail' pk=recipe.id %}">{{ recipe.name }}</a></td>
+                    <td>{{recipe.cooking_time}}</td>
+                    <td>{{recipe.return_number_of_ingredients}}</td>
+                    <td>{{recipe.calculate_difficulty}}</td>
+                    <td>{{recipe.creator.name}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <h2>Cooking Time:</h2>
+        <img src="data:image/png; base64, {{chart1|safe}}" alt="Plot Chart">
+        <h2>Difficulty:</h2>
+        <img src="data:image/png; base64, {{chart2|safe}}" alt="Pie Chart">
+        <h2>Nr. of Ingredients:</h2>
+        <img src="data:image/png; base64, {{chart3|safe}}" alt="Pie Chart">
         {% else %}
         <h2>No data</h2>
         {% endif %}
