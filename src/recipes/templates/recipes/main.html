@@ -73,6 +73,7 @@
 
 <body>
     <a href="{% url 'logout' %}"> Logout </a>
+    <a href="{% url 'recipes:search' %}"> Search </a>
     <div class="list">
         {% for object in object_list %}
         <a class="recipe-item" href="{{object.get_absolute_url}}">
